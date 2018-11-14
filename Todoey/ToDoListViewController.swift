@@ -10,16 +10,20 @@ import UIKit
 
 class ToDoListViewController: UITableViewController {
     
-    //MARK: Creating hardcordet array.
-    
+    //Creating array.
     var arrayItems = ["Buy banana","Buy apple","Buy pinch"]
-    
+    //Creatiing user defaults
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         tableView.separatorStyle = .none
         tableView.rowHeight = 80
+        //Persisting data with user defaults
+        if let items = defaults.value(forKey: "ToDoList") as? [String] {
+            arrayItems = items
+        }
     }
     
     //MARK: Table view methods here
@@ -58,6 +62,7 @@ class ToDoListViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
         //Trigers when user click add item button & adds new item to item array
             self.arrayItems.append(text.text!)
+            self.defaults.set(self.arrayItems, forKey: "ToDoList")
             self.tableView.reloadData()
         }
         alert.addAction(action)
