@@ -12,7 +12,7 @@ class ToDoListViewController: UITableViewController {
     
     //MARK: Creating hardcordet array.
     
-    let arrayItems = ["Buy banana","Buy apple","Buy pinch"]
+    var arrayItems = ["Buy banana","Buy apple","Buy pinch"]
     
     
     override func viewDidLoad() {
@@ -49,6 +49,25 @@ class ToDoListViewController: UITableViewController {
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         }
     }
-
+    //MARK: Adds new item to item array
+    
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var text = UITextField()
+        let alert = UIAlertController(title: "Add New Item", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+        //Trigers when user click add item button & adds new item to item array
+            self.arrayItems.append(text.text!)
+            self.tableView.reloadData()
+        }
+        alert.addAction(action)
+        alert.addTextField { (alertText) in
+            alertText.placeholder = "Add New Item.."
+            text = alertText
+        }
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
 }
 
